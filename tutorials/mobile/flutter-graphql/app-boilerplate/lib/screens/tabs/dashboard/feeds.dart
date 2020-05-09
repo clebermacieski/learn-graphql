@@ -82,6 +82,18 @@ class _FeedsState extends State<Feeds> {
             dynamic payload,
             dynamic error,
           }) {
+            if (error != null) {
+              debugPrint(error.toString());
+              return Text(error.toString());
+            }
+
+            if (loading) {
+              debugPrint("carregando");
+              return Center(
+                child: const CircularProgressIndicator(),
+              );
+            }
+
             if (payload != null) {
               _newId = payload['todos'][0]['id'];
               if (_previousId != 0) {

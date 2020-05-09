@@ -24,6 +24,18 @@ class Online extends StatelessWidget {
             dynamic payload,
             dynamic error,
           }) {
+            if (error != null) {
+              debugPrint(error.toString());
+              return Text(error.toString());
+            }
+
+            if (loading) {
+              debugPrint("carregando");
+              return Center(
+                child: const CircularProgressIndicator(),
+              );
+            }
+
             if (payload == null) {
               debugPrint("payload vazio");
             } else {
