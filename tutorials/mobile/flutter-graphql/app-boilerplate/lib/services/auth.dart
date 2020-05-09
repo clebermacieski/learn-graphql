@@ -15,6 +15,7 @@ class HasuraAuth {
       body: jsonEncode(credentials),
     )
         .catchError((onError) {
+      print(onError);
       return null;
     });
     if (response == null) {
@@ -37,6 +38,7 @@ class HasuraAuth {
       body: jsonEncode(credentials),
     )
         .catchError((onError) {
+      print(onError);
       return null;
     });
     if (response == null) {

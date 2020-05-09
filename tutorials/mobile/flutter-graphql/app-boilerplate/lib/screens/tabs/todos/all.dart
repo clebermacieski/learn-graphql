@@ -1,5 +1,6 @@
 import 'package:app_boilerplate/components/add_task.dart';
 import 'package:app_boilerplate/components/todo_item_tile.dart';
+import 'package:app_boilerplate/data/online_fetch.dart';
 import 'package:app_boilerplate/data/todo_fetch.dart';
 import 'package:app_boilerplate/model/todo_item.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,32 @@ class All extends StatefulWidget {
 }
 
 class _AllState extends State<All> {
+  static GraphQLClient _client;
+
+  runOnlineMutation(context) {
+    _client = GraphQLProvider
+        .of(context)
+        .value;
+    Future.doWhile(
+          () async {
+        _client.mutate(
+          MutationOptions(
+            documentNode: gql(OnlineFetch.updateStatus),
+            variables: {
+              'now': DateTime.now().toUtc().toIso8601String(),
+            },
+          ),
+        );
+        await Future.delayed(Duration(seconds: 30));
+        return true;
+      },
+    );
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => runOnlineMutation(context));
     super.initState();
   }
 

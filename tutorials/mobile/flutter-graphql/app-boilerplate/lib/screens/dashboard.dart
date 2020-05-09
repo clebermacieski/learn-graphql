@@ -12,7 +12,7 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GraphQLProvider(
-      client: Config.initailizeClient(),
+      client: Config.initializeClient(),
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
