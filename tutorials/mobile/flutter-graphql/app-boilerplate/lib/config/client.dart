@@ -9,16 +9,21 @@ class Config {
 
   static final AuthLink authLink =
       AuthLink(getToken: () async => await sharedPreferenceService.token);
+
   static final WebSocketLink websocketLink = WebSocketLink(
     url: 'wss://hasura.io/learn/graphql',
     config: SocketClientConfig(
       autoReconnect: true,
       inactivityTimeout: Duration(seconds: 30),
+      initPayload: {
+        'headers': {
+          'Authorization': () async => await sharedPreferenceService.token
+        },
+      },
     ),
   );
 
-  static final Link link =
-      authLink.concat(httpLink as Link).concat(websocketLink);
+  static final Link link = authLink.concat(httpLink).concat(websocketLink);
 
   static ValueNotifier<GraphQLClient> initializeClient() {
     ValueNotifier<GraphQLClient> client = ValueNotifier(

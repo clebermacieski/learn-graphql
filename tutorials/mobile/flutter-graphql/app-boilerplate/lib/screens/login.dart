@@ -77,6 +77,8 @@ class _LoginState extends State<Login> {
                             passwordController.text,
                           );
                           if (_token != null) {
+                            //TODO: Passar o token para criação do link
+                            //TODO: Tratar subscriptions aguardando o token
                             UtilFs.showToast("Login Successful", context);
                             await sharedPreferenceService.setToken(_token);
                             Navigator.pushReplacementNamed(
